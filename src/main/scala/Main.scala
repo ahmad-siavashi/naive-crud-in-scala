@@ -4,7 +4,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
-// Definition of the Person table (FI, the alternative is to use the code generator)
+// Definition of the People table (the alternative is to use the code generator)
 class People(tag: Tag)
     extends Table[(Int, String, String, Int)](tag, "PEOPLE") {
   def id = column[Int]("ID", O.PrimaryKey) // This is the primary key column
@@ -30,7 +30,6 @@ object Main extends App {
       )
     )
     Await.result(db.run(setup), Duration.Inf)
-
     // Read all people
     Await.result(
       db.run(people.result)
@@ -39,7 +38,6 @@ object Main extends App {
         }),
       Duration.Inf
     )
-
   } catch {
     case e: Throwable => print(e.printStackTrace())
   } finally db.close
